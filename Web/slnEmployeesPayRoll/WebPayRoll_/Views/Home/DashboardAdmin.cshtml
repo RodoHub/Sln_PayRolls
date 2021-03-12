@@ -1,0 +1,79 @@
+﻿@Html.Partial("ValidateLogin")
+@if (Session["RoleLogged"] != null)
+{
+<div class="container">
+    <div class="row" style="height: 30px;">
+        <div class="col-lg-12"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: center;">
+            @if (Session["RoleLogged"].ToString() == "Admin")
+            {
+                @Html.Raw("Dashboard Admin")
+            }
+            else
+            {
+                @Html.Raw("Dashboard Employees")            
+            }
+        </div>
+    </div>
+    <div class="row" style="height: 60px;">
+        <div class="col-lg-12"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3"></div>
+            @if (Session["RoleLogged"].ToString() == "Admin")
+            {
+                <div class="col-lg-2" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: left;">
+                    <button id="btnPayRollTickets" type="button" class="btn btn-warning" style="cursor: pointer; color: white; font-weight: 600; font-size: 11pt" onclick="GoDashBoard('@Url.Content(string.Format("~/Home/CheckPayRollTickets?employeeID={0}", Session["UserIDLogged"]))')">Check PayRoll Tickets</button>
+                </div>
+                <div class="col-lg-2" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: left;">
+                    <button id="btnEmployeesManagement" type="button" class="btn btn-primary" style="cursor: pointer; color: white; font-weight: 600; font-size: 11pt" onclick="GoDashBoard('@Url.Content("~/Home/EmployeesManagement?active=1")')">Employess Management</button>              
+                </div>
+                <div class="col-lg-2" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: left;">
+                    <button id="btnGenerateMonthlyPayRoll" type="button" class="btn btn-success" style="cursor: pointer; color: white; font-weight: 600; font-size: 11pt" onclick="GoDashBoard('@Url.Content(string.Format("~/Home/GenerateMonthlyPayRoll?generate=false&year={0}&month={1}&action=0", DateTime.Now.Year, DateTime.Now.Month))')">Generate Monthly PayRoll</button>
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-2" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: left;">                    
+                </div>
+                <div class="col-lg-2" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: left;">
+                    <button id="btnPayRollTickets" type="button" class="btn btn-warning" style="cursor: pointer; color: white; font-weight: 600; font-size: 11pt" onclick="GoDashBoard('@Url.Content(string.Format("~/Home/CheckPayRollTickets?employeeID={0}", Session["UserIDLogged"]))')">Check PayRoll Tickets</button>
+                </div>
+                <div class="col-lg-2" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: left;">
+                </div>
+            }
+        <div class="col-lg-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" style="height: 50px;"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: left;">
+            <button id="btnCloseDashBoard" type="button" class="btn btn-danger" style="cursor: pointer; color: white; font-weight: 600; font-size: 18pt" onclick="GoDashBoard('@Url.Content("~/Home/UserLogin?SignOut=1")')">&nbsp;&nbsp;&nbsp;&nbsp;LogOff&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        </div>
+        <div class="col-lg-5"></div>
+    </div>
+    <div class="row" style="height: 30px;">
+        <div class="col-lg-12"></div>
+    </div>
+</div>
+    <script>
+
+        $(document).ready(InitializeComponents);
+
+        function GoDashBoard(dashboard_)
+        {
+            window.location = dashboard_;
+        }
+
+        function InitializeComponents()
+        {
+            //Initialize JS Utilities
+                JSObject = InitializeJSs();
+        }
+    </script>
+
+}

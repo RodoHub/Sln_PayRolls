@@ -1,0 +1,598 @@
+﻿@Html.Partial("ValidateLogin")
+@model IEnumerable<WebPayRoll_.Models.Classes.MEmployees>
+@if(Session["RoleLogged"] != null) 
+{ 
+    if(Session["RoleLogged"].ToString() == "Admin") 
+    {     
+        <div class="container">
+            <div class="row" style="height: 30px;">
+                <div class="col-lg-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="color: rgba(19, 57, 160, 0.85); font-size: 20pt; text-align: center;">
+                    Employees Management
+                </div>
+            </div>
+            <div class="row" style="height: 50px;">
+                <div class="col-lg-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 90%; text-align: left;">
+                                <button type="button" id="Applications_btnDdlShowsOnly" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Show  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#" onclick="GetEmployees('0')">Inactive</a>
+                                    <a class="dropdown-item" href="#" onclick="GetEmployees('1')">Active</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" onclick="GetEmployees('-1')">All Employees</a>
+                                </div>
+
+                                <button id="btnAddEmployee" type="button" class="btn btn-primary" style="cursor: pointer;" onclick="ShowEmployeesForm('Add', null)">Add employee</button>
+                            </td>
+                            <td style="width: 10%; text-align: right;"><button id="btnClose" type="button" class="btn btn-secondary" style="cursor: pointer;" onclick="GoDashBoard('@Url.Content("~/Home/DashboardAdmin")')">Close</button></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="height: 10px; width: 100%; text-align: left; padding-left: 10px;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="height: 10px; width: 100%; text-align: left; padding-left: 10px;">
+                            </td>
+                        </tr>
+                    </table>            
+                </div>
+            </div>    
+            <div class="row">
+                <div class="col-lg-12" style="">
+                    <table class="table table-hover" style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.07); color: rgba(0, 0, 0, 0.6); font-weight: 600;">
+                        <thead>
+                            <tr style="background-color: rgba(173, 183, 189, 0.07)">
+                                <th style="width: 80%">Name</th>
+                                <th colspan="3" style="text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var employee in Model)
+                            {
+                                <tr>
+                                    <td style="width: 80%">
+                                        <img src="@Url.Content(string.Format("~/Resources/Images/{0}.png", ((bool)employee.Active ? "img_MarvelGreen_22x22_" : "img_MarvelRed_22x22_")))" style="width: 22px; height: 22px;" />
+                                        @string.Format("{0} {1} - [ {2} ]", employee.Name, employee.LastNames, employee.RoleName)
+                                    </td>
+                                    <td>
+                                        <button id="btnEditEmployee" type="button" class="btn btn-link" style="cursor: pointer;" onclick="ShowEmployeesForm('Edit', @employee.EmployeeID)">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button id="btnDeleteEmployee" type="button" class="btn btn-link" style="cursor: pointer;" onclick="DeleteEmployee(@employee.EmployeeID,'@employee.Name' + ' ' + '@employee.LastNames' )">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="height: 30px;">
+                <div class="col-lg-12"></div>
+            </div>
+            <div class="row" style="">
+                <div class="col-lg-12">
+                    <table id="tblEmployeesForm" style="width: 100%; display: none;">
+                        <tr>
+                            <td style="color: rgba(17, 72, 222, 0.85); font-size: 14pt; font-weight: 600;">General Info</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td colspan="3" style="text-align: right;">
+                                            <div class="form-check">
+                                                <input type="hidden" id="hiddenTxtEmployeeID" value="" />
+                                                <input class="form-check-input" type="checkbox" value="" id="chkEmployeeActive" checked="checked">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Active
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;">
+                                            <div class="input-group flex-nowrap">
+                                                <span class="input-group-text" id="addon-wrapping" style="border-radius: 5px 0px 0px 5px;">Employee</span>
+                                                <input id="txtName" tag="Name" type="text" class="form-control" placeholder="Name(s)..." aria-label="Username" aria-describedby="addon-wrapping">
+                                                <input id="txtLastNames" tag="Last Names" type="text" class="form-control" placeholder="Last Names..." aria-label="Username" aria-describedby="addon-wrapping">
+                                            </div>
+                                        </td>
+                                        <td style="width: 10px;">&nbsp;</td>
+                                        <td style="text-align: right;">
+                                            <div class="input-group flex-nowrap">
+                                                <span class="input-group-text" id="addon-wrapping" style="border-radius: 5px 0px 0px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Role</span>
+                                                <select id="ddlRole" style="width: 100%;" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;">
+                                            <div class="input-group flex-nowrap">
+                                                <span class="input-group-text" id="addon-wrapping" style="border-radius: 5px 0px 0px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email</span>
+                                                <input id="txtEmail" tag="Email" type="text" class="form-control" placeholder="Email address..." aria-label="Username" aria-describedby="addon-wrapping">
+                                                <input id="txtEmail_Hidden" tag="Email" type="hidden" class="form-control" placeholder="Email address..." aria-label="Username" aria-describedby="addon-wrapping">
+                                            </div>
+                                        </td>
+                                        <td style="text-align: left;"></td>
+                                        <td style="text-align: left;">
+                                            <div class="input-group flex-nowrap">
+                                                <span class="input-group-text" id="addon-wrapping" style="border-radius: 5px 0px 0px 5px;">&nbsp;Password</span>
+                                                <input id="txtPassword" tag="Password" type="password" class="form-control" placeholder="*******" aria-label="Username" aria-describedby="addon-wrapping">
+                                                <input id="txtPassword_Hidden" tag="Password" type="hidden" class="form-control" placeholder="*******" aria-label="Username" aria-describedby="addon-wrapping">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr><td style="height: 20px;"></td></tr>
+                        <tr>
+                            <td style="color: rgba(17, 72, 222, 0.85); font-size: 14pt; font-weight: 600;">Salary</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <table style="width: 100%">
+                                                <tr>
+                                                    <td style="text-align: right;">
+                                                        <div class="input-group flex-nowrap">
+                                                            <span class="input-group-text" id="addon-wrapping" style="border-radius: 5px 0px 0px 5px;">Base Salary</span>
+                                                            <input id="txtBaseSalary" tag="Base Salary" type="text" class="form-control" placeholder="Example: 10000" aria-label="Username" aria-describedby="addon-wrapping" maxlength="8">
+                                                        </div>
+
+                                                    </td>
+                                                    <td style="width: 10px;">&nbsp;</td>
+                                                    <td style="text-align: left;">
+                                                        <div class="input-group flex-nowrap">
+                                                            <span class="input-group-text" id="addon-wrapping" style="border-radius: 5px 0px 0px 5px;">% Deductions</span>
+                                                            <input tag="Breakfast deduction" id="txtBreakFastDeduction" type="text" class="form-control" placeholder="Between 0.01 and 0.3" aria-label="Username" aria-describedby="addon-wrapping" maxlength="4">
+                                                            <input tag="Saving deduction" id="txtSavingDeduction" type="text" class="form-control" placeholder="Between 0.01 and 0.3" aria-label="Username" aria-describedby="addon-wrapping" maxlength="4">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 50px;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 70%;">
+                                            <div id="divErrors" style="font-weight: 600; color: rgba(245, 12, 12, 0.8); overflow-y: auto; height: 100px; text-align: justify;"></div>
+                                        </td>
+                                        <td style="width: 30%">
+                                            <button id="btnSaveEmployee" type="button" class="btn btn-info" style="cursor: pointer;" onclick="SaveEmployee()">Save</button>
+                                            <button id="btnCancel" type="button" class="btn btn-secondary" style="cursor: pointer;">Cancel</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table id="tblEmployeesDelete" style="width: 100%; display: none;">
+                        <tr>
+                            <td style="width: 70%;">
+                                <div id="divQuestionDelete" style="font-weight: 600; color: rgba(245, 12, 12, 0.8); overflow-y: auto; height: 100px; text-align: justify;"></div>
+                            </td>
+                            <td style="width: 30%">
+                                <button id="btnDeleteEmployeeExecute" type="button" class="btn btn-info" style="cursor: pointer;">Yes</button>
+                                <button id="btnCancelDelete" type="button" class="btn btn-secondary" style="cursor: pointer;">Cancel</button>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </div>
+            </div>
+
+        </div>
+        <script>
+
+            $(document).ready(InitializeComponents);
+
+            function InitializeComponents()
+            {
+
+                //Initialize JS Utilities
+                    JSObject = InitializeJSs();
+            }
+
+            function ClearFields()
+            {
+                $("input[id*='txt']").each(function (index, item)
+                {
+                    $(item).val("");
+                });
+
+                $("#divErrors").empty();
+                $("#divErrors").css('display', 'none');
+
+            }
+
+            function CheckForValidFields()
+            {
+                var infoArr = [];
+
+                var validations = [];
+                validations.push({ 'validation' : 'NotEmpty', 'Message' : "The field <b>[TAG]</b> can not be empty.", 'Suggestion' : "Fill information" });
+                validations.push({ 'validation' : 'Numbers', 'Message' : "The field <b>[TAG]</b> must be numeric.", 'Suggestion' : "Type only numbers" });
+                validations.push({ 'validation' : 'Length', 'Message' : "The field <b>[TAG]</b> overflows limit", 'Suggestion' : "" });
+                validations.push({ 'validation' : 'Words', 'Message' : "The field <b>[TAG]</b> must not contain numbers.", 'Suggestion' : "Type only words" });
+
+                var validationInfo = null;
+
+                for (var i = 0; i <= validations.length - 1; i++)
+                {
+                    if (infoArr.length == 0)
+                    {
+                        $("input[id*='txt']").each(function (index, item)
+                        {
+                            switch (validations[i].validation)
+                            {
+                                case 'NotEmpty':
+
+                                    if (!$(item).attr("id").includes("Hidden"))
+                                    {
+                                        validationInfo = JSObject.ValidateInfo($(item), validations[i].validation, validations[i].Message.replace('[TAG]', $(item).attr('tag')), validations[i].Suggestion);
+                                    }
+
+                                    break;
+
+                                case 'Numbers':
+
+                                    if ($(item).attr('id') == 'txtBreakFastDeduction' || $(item).attr('id') == 'txtSavingDeduction' || $(item).attr('id') == 'txtBaseSalary' )
+                                    {
+                                        validationInfo = JSObject.ValidateInfo($(item), validations[i].validation, validations[i].Message.replace('[TAG]', $(item).attr('tag')), validations[i].Suggestion);
+                                    }
+
+                                    break;
+
+                                case 'Length':
+
+                                    if ($(item).attr('id') == 'txtBreakFastDeduction' || $(item).attr('id') == 'txtSavingDeduction')
+                                    {
+                                        if (parseFloat($(item).val().toString()) < 0 || parseFloat($(item).val().toString()) > 0.3)
+                                        {
+                                            validationInfo = { 'isValid': false, 'Field': validations[i].Message.replace('[TAG]', $(item).attr('tag')), 'Message': validations[i].Message.replace('[TAG]', $(item).attr('tag')) + " " + "Type values between 0.01 and 0.3" }
+                                        }
+                                    }
+
+                                    break;
+
+                                case 'Words':
+
+                                    if ($(item).attr('id') == 'txtName' || $(item).attr('id') == 'txtLastNames')
+                                    {
+                                        validationInfo = JSObject.ValidateInfo($(item), validations[i].validation, validations[i].Message.replace('[TAG]', $(item).attr('tag')), validations[i].Suggestion);
+                                    }
+
+                                    break;
+
+                            }
+
+                            if (typeof validationInfo === 'object')
+                            {
+                                infoArr.push(validationInfo);
+                            }
+
+
+                        });
+                    }
+                }
+
+                return infoArr;
+            }
+
+            function ShowEmployeesForm(action_, id)
+            {
+                JSObject.ShowMessage("ALERT", action_ + " Employee", "");
+
+                $("div[id$='MainModalPopUpMessageText']").append($("#tblEmployeesForm"));
+                $("#tblEmployeesForm").css("display", "");
+                $("#MainModalPopUpMessage_Icon").css("display", "none");
+                $("#MainModalPopUpMessage_Icon_Space").css("display", "none");
+                $("#txtName").focus();
+
+                $("#MainModalPopUpMessageClose").click(
+                    function ()
+                    {
+                        $("body").append($("#tblEmployeesForm"));
+                        ClearFields();
+                        $("#tblEmployeesForm").css("display", "none");
+                    });
+
+                $("#btnCancel").click(function () { $("#MainModalPopUpMessageClose").click(); })
+
+                $("#txtPassword").blur(function ()
+                {
+                    var validPassword = JSObject.ValidateInfo($(this), "PasswordBase", "- The Password is weak.", "<br />The password must have at least 7 characters.");
+
+                    var passwordMessageError = (validPassword == true ? "" : validPassword.Message);
+
+                    if (passwordMessageError != "")
+                    {
+                        if ($("#txtPassword_Hidden").val().trim().length != 0)
+                        {
+                            if ($("#txtPassword_Hidden").val().trim() == $(this).val().trim())
+                            {
+                                passwordMessageError = "";
+                            }
+                        }
+                    }
+
+                    if (passwordMessageError == "")
+                    {
+                        $("#divErrors").empty();
+                        $("#divErrors").css('display', 'none');
+                    }
+                    else
+                    {
+                        $("#divErrors").empty();
+                        $("#divErrors").append("<span>Following errors were detected:</span><br />" + passwordMessageError);
+                        $("#divErrors").css('display', '');
+                        $(this).focus();
+                    }                    
+                });
+
+                $("#txtEmail").blur(function ()
+                {
+                    $(this).val($(this).val().trim());
+
+                    var validEmail = JSObject.ValidateInfo($(this), "Email", "- The email given is not valid", "<br />Verify spelling and try again ...");
+
+                    var emailMessageError = (validEmail == true ? "" : validEmail.Message);
+
+                    if (emailMessageError == "")
+                    {
+                        var emailFilter = {};
+                        emailFilter.email = $(this).val().trim();
+
+                        var emailExistDS = JSObject.ExecAjaxRS("@Url.Content("~/Home/EmailExists")", emailFilter);
+
+                        var emailExistDS_ = (emailExistDS.d == undefined ? emailExistDS : emailExistDS.d);
+
+                        emailExistDS = emailExistDS_;
+
+                        if (emailExistDS != undefined)
+                        {
+                            if ($("#txtEmail_Hidden").val().trim().length == 0)
+                            {
+                                emailMessageError += (emailExistDS == "0" ? "" : "- The email given is already use by another employee.")
+                            }
+                            else
+                            {
+                                if ($("#txtEmail_Hidden").val().trim() == $(this).val().trim())
+                                {
+                                    emailMessageError == "";
+                                }
+                                else
+                                {
+                                    emailMessageError += (emailExistDS == "0" ? "" : "- The email given is already use by another employee.")
+                                }
+                            }
+                        }
+                        else
+                        {
+                            emailMessageError += "- An error ocurs during validation of email. <br /> Please, try again later."
+                        }
+                    }
+
+                    if (emailMessageError == "")
+                    {
+                        $("#divErrors").empty();
+                        $("#divErrors").css('display', 'none');
+                    }
+                    else
+                    {
+                        $("#divErrors").empty();
+                        $("#divErrors").append("<span>Following errors were detected:</span><br />" + emailMessageError);
+                        $("#divErrors").css('display', '');
+                        $(this).focus();
+                    }                    
+                });
+
+
+                //Roles for form
+                    var searchFilters = {};
+                    searchFilters.user = $("#txtUser").val();
+                    searchFilters.pws = $("#txtPwd").val();
+
+                    var resultSet = JSObject.ExecAjaxRS("@Url.Content("~/Home/Roles")", searchFilters);
+
+                    var dataSource_ = (resultSet.d == undefined ? resultSet : resultSet.d);
+
+                    resultSet = dataSource_;
+
+                    for (var i = 0; i < resultSet.length; i++)
+                    {
+                        var option = $(document.createElement('option'));
+
+                        option.val(resultSet[i].RoleID);
+                        option.text(resultSet[i].Name);
+
+                        $("#ddlRole").append(option);
+                    }
+
+                //Prepare for as per as action
+                    $("#hiddenTxtEmployeeID").val(id);
+                    if (id != null)
+                    {
+                        searchFilters = {};
+                        searchFilters.id = id;
+
+                        resultSet = JSObject.ExecAjaxRS("@Url.Content("~/Home/Employees")", searchFilters);
+
+                        dataSource_ = (resultSet.d == undefined ? resultSet : resultSet.d);
+
+                        resultSet = dataSource_;
+
+                        if (resultSet != undefined)
+                        {
+                            $("#txtName").val(resultSet.Name);
+                            $("#txtLastNames").val(resultSet.LastNames);
+                            $("#txtEmail").val(resultSet.Email);
+                            $("#txtEmail_Hidden").val(resultSet.Email);
+                            $("#txtPassword").val(resultSet.Password);
+                            $("#txtPassword_Hidden").val(resultSet.Password);
+                            $("#ddlRole").val(resultSet.RoleID);
+                            $("#chkEmployeeActive").prop("checked", resultSet.Active);
+
+                            resultSet = JSObject.ExecAjaxRS("@Url.Content("~/Home/PayRollInfo")", searchFilters);
+                            dataSource_ = (resultSet.d == undefined ? resultSet : resultSet.d);
+                            resultSet = dataSource_;
+
+                            if (resultSet != undefined)
+                            {
+                                $("#txtBaseSalary").val(resultSet.BaseSalary);
+                                $("#txtBreakFastDeduction").val(resultSet.BreakfastDeduction);
+                                $("#txtSavingDeduction").val(resultSet.SavingDeduction);
+                            }
+                        }
+                    }
+            }
+
+            function SaveEmployee()
+            {
+                var infoValidations = CheckForValidFields();
+
+                $("#divErrors").empty();
+
+                if (infoValidations.length == 0)
+                {
+                    $("#divErrors").css('display', 'none');
+
+                    //Roles for form
+                        var searchFilters = {};
+                        searchFilters.EmployeeID = $("#hiddenTxtEmployeeID").val();
+                        searchFilters.Name = $("#txtName").val();
+                        searchFilters.LastNames = $("#txtLastNames").val();
+                        searchFilters.Email = $("#txtEmail").val();
+                        searchFilters.Password = $("#txtPassword").val();
+                        searchFilters.RoleID = $("#ddlRole").val();
+                        searchFilters.Active = ($("#chkEmployeeActive").prop("checked") ? 1 : 0);
+                        searchFilters.BaseSalary = $("#txtBaseSalary").val();
+                        searchFilters.BreakfastDeduction = $("#txtBreakFastDeduction").val();
+                        searchFilters.SavingDeduction = $("#txtSavingDeduction").val();
+                        searchFilters.action = (searchFilters.EmployeeID == "" || searchFilters.EmployeeID == null ? "POST" : "PUT");
+
+                        resultSet = JSObject.ExecAjaxRS("@Url.Content("~/Home/EmployeesCU")", searchFilters);
+
+                        dataSource_ = (resultSet.d == undefined ? resultSet : resultSet.d);
+
+                        resultSet = dataSource_;
+
+                        if(resultSet.length > 0)
+                        {
+                            if (resultSet != "null")
+                            {
+                                $("body").append($("#tblEmployeesForm"));
+                                ClearFields();
+                                $("#tblEmployeesForm").css("display", "none");
+                                JSObject.ShowMessage("INFO", "Employee Creation", resultSet);
+                                $("#MainModalPopUpMessageClose").click(
+                                    function ()
+                                    {
+                                        GetEmployees(1);
+                                    });
+                            }
+                        }
+
+                }
+                else
+                {
+                    var msgErrors = "";
+
+                    for (var i = 0; i <= infoValidations.length - 1; i++)
+                    {
+                        msgErrors += "<span style='rgba(245, 12, 12, 0.5)'>" + infoValidations[i].Message + "</span><br />"
+                    }
+
+                    msgErrors = "<span>Following errors were detected:</span><br />" + msgErrors;
+
+                    $("#divErrors").append(msgErrors);
+                    $("#divErrors").css('display', '');
+                }
+            }
+
+
+            function DeleteEmployee(id, name)
+            {
+
+                JSObject.ShowMessage("ALERT", "Delete Employee", "");
+
+                $("div[id$='MainModalPopUpMessageText']").append($("#tblEmployeesDelete"));
+                $("#tblEmployeesDelete").css("display", "");
+                $("#MainModalPopUpMessage_Icon").css("display", "none");
+                $("#MainModalPopUpMessage_Icon_Space").css("display", "none");
+                $("#divQuestionDelete").text("Are you sure you want to delete employee " + name + "?");
+
+                $("#MainModalPopUpMessageClose").click(
+                    function () {
+                        $("body").append($("#tblEmployeesDelete"));
+                        $("#tblEmployeesDelete").css("display", "none");
+                    });
+
+                $("#btnCancelDelete").click(function () { $("#MainModalPopUpMessageClose").click(); })
+
+                $("#btnDeleteEmployeeExecute").click(
+                    function ()
+                    {
+                        var searchFilters = {};
+                        searchFilters.EmployeeID = id;
+
+                        resultSet = JSObject.ExecAjaxRS("@Url.Content("~/Home/EmployeesD")", searchFilters);
+
+                        dataSource_ = (resultSet.d == undefined ? resultSet : resultSet.d);
+
+                        resultSet = dataSource_;
+
+                        if(resultSet.length > 0)
+                        {
+                            if (resultSet != "null")
+                            {
+                                $("body").append($("#tblEmployeesDelete"));
+                                $("#tblEmployeesDelete").css("display", "none");
+                                JSObject.ShowMessage("INFO", "Employee Deletion", resultSet);
+                                $("#MainModalPopUpMessageClose").click(
+                                    function ()
+                                    {
+                                        GetEmployees(1);
+                                    });
+
+                            }
+                        }
+                    });
+            }
+
+            function GetEmployees(value)
+            {
+                window.location = "@Url.Content("~/Home/EmployeesManagement")" + "?active=" + value;
+            }
+
+            function GoDashBoard(dashboard_)
+            {
+                window.location = dashboard_;
+            }
+
+        </script>
+    }
+
+}
+

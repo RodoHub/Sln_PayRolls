@@ -1,0 +1,6 @@
+﻿@if (Session["RoleLogged"] == null)
+{
+    <script>
+        window.location = "@Url.Content("~/Home/UserLogin")";
+    </script>
+}
