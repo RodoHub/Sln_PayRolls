@@ -17,6 +17,7 @@
           <Property Name="Email" Type="varchar" MaxLength="200" />
           <Property Name="Password" Type="varchar" MaxLength="10" />
           <Property Name="Active" Type="bit" />
+          <Property Name="Token" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="PayRoll_Tab">
           <Key>
@@ -47,6 +48,24 @@
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Description" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="TokenAuth">
+          <Key>
+            <PropertyRef Name="TokenAuthID" />
+          </Key>
+          <Property Name="TokenAuthID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="uniqueidentifier" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="TokenStatusID" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="TokenStatus">
+          <Key>
+            <PropertyRef Name="TokenStatusID" />
+          </Key>
+          <Property Name="TokenStatusID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="CreationDate" Type="datetime" />
         </EntityType>
         <Association Name="FK__Employees__RoleI__398D8EEE">
           <End Role="Role_Cat" Type="Self.Role_Cat" Multiplicity="0..1" />
@@ -84,11 +103,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__TokenAuth__Token__571DF1D5">
+          <End Role="TokenStatus" Type="Self.TokenStatus" Multiplicity="0..1" />
+          <End Role="TokenAuth" Type="Self.TokenAuth" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TokenStatus">
+              <PropertyRef Name="TokenStatusID" />
+            </Principal>
+            <Dependent Role="TokenAuth">
+              <PropertyRef Name="TokenStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PayrollEmployeesModelStoreContainer">
           <EntitySet Name="Employees_Tab" EntityType="Self.Employees_Tab" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PayRoll_Tab" EntityType="Self.PayRoll_Tab" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PayRollInfo_Tab" EntityType="Self.PayRollInfo_Tab" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role_Cat" EntityType="Self.Role_Cat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TokenAuth" EntityType="Self.TokenAuth" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TokenStatus" EntityType="Self.TokenStatus" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Employees__RoleI__398D8EEE" Association="Self.FK__Employees__RoleI__398D8EEE">
             <End Role="Role_Cat" EntitySet="Role_Cat" />
             <End Role="Employees_Tab" EntitySet="Employees_Tab" />
@@ -100,6 +133,10 @@
           <AssociationSet Name="FK__PayRollIn__Emplo__3C69FB99" Association="Self.FK__PayRollIn__Emplo__3C69FB99">
             <End Role="Employees_Tab" EntitySet="Employees_Tab" />
             <End Role="PayRollInfo_Tab" EntitySet="PayRollInfo_Tab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TokenAuth__Token__571DF1D5" Association="Self.FK__TokenAuth__Token__571DF1D5">
+            <End Role="TokenStatus" EntitySet="TokenStatus" />
+            <End Role="TokenAuth" EntitySet="TokenAuth" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -120,6 +157,7 @@
           <Property Name="Active" Type="Boolean" />
           <NavigationProperty Name="Role_Cat" Relationship="Self.FK__Employees__RoleI__398D8EEE" FromRole="Employees_Tab" ToRole="Role_Cat" />
           <NavigationProperty Name="PayRollInfo_Tab" Relationship="Self.FK__PayRollIn__Emplo__3C69FB99" FromRole="Employees_Tab" ToRole="PayRollInfo_Tab" />
+          <Property Name="Token" Type="Guid" />
         </EntityType>
         <EntityType Name="PayRoll_Tab">
           <Key>
@@ -208,7 +246,45 @@
             <End Role="PayRollInfo_Tab" EntitySet="PayRollInfo_Tab" />
             <End Role="PayRoll_Tab" EntitySet="PayRoll_Tab" />
           </AssociationSet>
+          <EntitySet Name="TokenAuth" EntityType="PayrollEmployeesModel.TokenAuth" />
+          <EntitySet Name="TokenStatus" EntityType="PayrollEmployeesModel.TokenStatus" />
+          <AssociationSet Name="FK__TokenAuth__Token__571DF1D5" Association="PayrollEmployeesModel.FK__TokenAuth__Token__571DF1D5">
+            <End Role="TokenStatus" EntitySet="TokenStatus" />
+            <End Role="TokenAuth" EntitySet="TokenAuth" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TokenAuth">
+          <Key>
+            <PropertyRef Name="TokenAuthID" />
+          </Key>
+          <Property Name="TokenAuthID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token" Type="Guid" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="TokenStatusID" Type="Byte" />
+          <NavigationProperty Name="TokenStatus" Relationship="PayrollEmployeesModel.FK__TokenAuth__Token__571DF1D5" FromRole="TokenAuth" ToRole="TokenStatus" />
+        </EntityType>
+        <EntityType Name="TokenStatus">
+          <Key>
+            <PropertyRef Name="TokenStatusID" />
+          </Key>
+          <Property Name="TokenStatusID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TokenAuth" Relationship="PayrollEmployeesModel.FK__TokenAuth__Token__571DF1D5" FromRole="TokenStatus" ToRole="TokenAuth" />
+        </EntityType>
+        <Association Name="FK__TokenAuth__Token__571DF1D5">
+          <End Type="PayrollEmployeesModel.TokenStatus" Role="TokenStatus" Multiplicity="0..1" />
+          <End Type="PayrollEmployeesModel.TokenAuth" Role="TokenAuth" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TokenStatus">
+              <PropertyRef Name="TokenStatusID" />
+            </Principal>
+            <Dependent Role="TokenAuth">
+              <PropertyRef Name="TokenStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -218,6 +294,7 @@
           <EntitySetMapping Name="Employees_Tab">
             <EntityTypeMapping TypeName="PayrollEmployeesModel.Employees_Tab">
               <MappingFragment StoreEntitySet="Employees_Tab">
+                <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LastNames" ColumnName="LastNames" />
@@ -259,6 +336,26 @@
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TokenAuth">
+            <EntityTypeMapping TypeName="PayrollEmployeesModel.TokenAuth">
+              <MappingFragment StoreEntitySet="TokenAuth">
+                <ScalarProperty Name="TokenStatusID" ColumnName="TokenStatusID" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="TokenAuthID" ColumnName="TokenAuthID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TokenStatus">
+            <EntityTypeMapping TypeName="PayrollEmployeesModel.TokenStatus">
+              <MappingFragment StoreEntitySet="TokenStatus">
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TokenStatusID" ColumnName="TokenStatusID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

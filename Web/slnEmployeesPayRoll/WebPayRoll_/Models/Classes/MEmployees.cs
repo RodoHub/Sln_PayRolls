@@ -15,6 +15,7 @@ namespace WebPayRoll_.Models.Classes
         public string Email { get; set; }
         public string Password { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Guid Token { get; set; }
 
         public string RoleName 
         {

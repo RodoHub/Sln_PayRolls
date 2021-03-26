@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WebPayRoll_.Models.DB;
 using WebPayRoll_.Models.Classes;
 using WebPayRoll_.Models.Extensions;
+using WebPayRoll_.Models.Api;
 
 namespace WebPayRoll_.Controllers
 {
@@ -48,6 +49,13 @@ namespace WebPayRoll_.Controllers
 
                 if(SignOut != 0) 
                 {
+                    AccessController accessor = new AccessController();
+                    
+                    if(Session["UserIDLogged"]!= null) 
+                    {
+                        accessor.LogOff(Session["UserIDLogged"].ToString());                
+                    }
+
                     Session["UserLogged"] = null;
                     Session["RoleLogged"] = null;
                     Session["UserIDLogged"] = null;
@@ -57,26 +65,22 @@ namespace WebPayRoll_.Controllers
 
                 if(!string.IsNullOrWhiteSpace(user) && !string.IsNullOrWhiteSpace(pws))
                 {
-                    MEmployees employee = new EmployeesController().Get().Where(u => u.Email == user && u.Password == pws).FirstOrDefault();
 
-                    if (employee == null) 
+                    AccessController accessor = new AccessController();
+
+                    MUser userToLogin = accessor.Login(new LoginEntity() { UserName = user, Password = pws }).Data.Get<MUser>();
+
+                    if (userToLogin == null) 
                     {
                         return Json("Failed", JsonRequestBehavior.AllowGet);
                     }
 
-                    if(employee.Active == false)
-                    {
-                        return Json("Inactive", JsonRequestBehavior.AllowGet);
-                    }
+                    Session["UserLogged"] = userToLogin.Name;
+                    Session["RoleLogged"] = userToLogin.RoleName;
+                    Session["UserIDLogged"] = userToLogin.UserID;
 
-                    string roleName = new RolesController().Get(int.Parse(employee.RoleID.ToString())).Name;
-                    string userName = string.Format("{0} {1}", employee.Name, employee.LastNames);
+                    return Json(Url.Content("~/Home/" + (userToLogin.RoleName == "Admin" ? "DashboardAdmin" : "DashboardAdmin")), JsonRequestBehavior.AllowGet);
 
-                    Session["UserLogged"] = userName;
-                    Session["RoleLogged"] = roleName;
-                    Session["UserIDLogged"] = employee.EmployeeID;
-
-                    return Json(Url.Content("~/Home/" + (roleName == "Admin" ? "DashboardAdmin" : "DashboardAdmin")), JsonRequestBehavior.AllowGet);
                 }
                 else 
                 {

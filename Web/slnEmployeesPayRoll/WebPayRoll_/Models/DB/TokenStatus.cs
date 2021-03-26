@@ -12,26 +12,20 @@ namespace WebPayRoll_.Models.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Employees_Tab
+    public partial class TokenStatus
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employees_Tab()
+        public TokenStatus()
         {
-            this.PayRollInfo_Tab = new HashSet<PayRollInfo_Tab>();
+            this.TokenAuth = new HashSet<TokenAuth>();
         }
     
-        public int EmployeeID { get; set; }
+        public byte TokenStatusID { get; set; }
         public string Name { get; set; }
-        public string LastNames { get; set; }
-        public Nullable<System.DateTime> AdmissionDate { get; set; }
-        public Nullable<int> RoleID { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public Nullable<bool> Active { get; set; }
-        public Nullable<System.Guid> Token { get; set; }
+        public string Description { get; set; }
+        public Nullable<System.DateTime> CreationDate { get; set; }
     
-        public virtual Role_Cat Role_Cat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PayRollInfo_Tab> PayRollInfo_Tab { get; set; }
+        public virtual ICollection<TokenAuth> TokenAuth { get; set; }
     }
 }

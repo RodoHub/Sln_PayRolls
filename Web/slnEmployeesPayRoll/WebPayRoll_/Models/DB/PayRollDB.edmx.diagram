@@ -12,6 +12,9 @@
         <AssociationConnector Association="PayrollEmployeesModel.FK__Employees__RoleI__398D8EEE" ManuallyRouted="false" />
         <AssociationConnector Association="PayrollEmployeesModel.FK__PayRollIn__Emplo__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="PayrollEmployeesModel.FK__PayRoll_T__PayRo__3F466844" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PayrollEmployeesModel.TokenAuth" Width="1.5" PointX="3" PointY="5.875" />
+        <EntityTypeShape EntityType="PayrollEmployeesModel.TokenStatus" Width="1.5" PointX="0.75" PointY="5.875" />
+        <AssociationConnector Association="PayrollEmployeesModel.FK__TokenAuth__Token__571DF1D5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
