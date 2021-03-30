@@ -7,10 +7,10 @@ using System.Web.Http;
 using WebPayRoll_.Models.DB;
 using WebPayRoll_.Models.Classes;
 using WebPayRoll_.Models.Extensions;
-
+using WebPayRoll_.Models.Api;
 namespace WebPayRoll_.Controllers
 {
-    public class EmployeesController: ApiController
+    public class EmployeesController: AuthController
     {
         /// <summary>
         /// Holds instance of PayRoll
@@ -18,13 +18,28 @@ namespace WebPayRoll_.Controllers
         private readonly PayrollEmployeesEntities PayRollDB = new PayrollEmployeesEntities();
 
         /// <summary>
+        /// Holds instance of PayRoll
+        /// </summary>
+        private bool IsAuthorized { get; set; }
+
+
+        /// <summary>
+        /// Initialize Api Controller
+        /// </summary>
+        /// <param name="token">Authorization token</param>
+        public EmployeesController(string token = "") 
+        {
+            this.IsAuthorized = this.ValidateAuthorization(token).Data.Get<bool>();
+        }
+
+        /// <summary>
         /// Get Employee
         /// </summary>
         /// <param name="id">ID</param>
         /// <returns></returns>
         public MEmployees Get(int id)
-        {
-            return this.Get().Where(item => item.EmployeeID.ToString() == id.ToString()).ToList().FirstOrDefault();
+        {            
+            return (IsAuthorized ? this.Get().Where(item => item.EmployeeID.ToString() == id.ToString()).ToList().FirstOrDefault() : new MEmployees());
         }
 
         /// <summary>
@@ -33,7 +48,7 @@ namespace WebPayRoll_.Controllers
         /// <returns></returns>
         public List<MEmployees> Get()
         {
-            return PayRollDB.Employees_Tab.ToList().MapTo<Employees_Tab, MEmployees>();
+            return (IsAuthorized ? PayRollDB.Employees_Tab.ToList().MapTo<Employees_Tab, MEmployees>() : new List<MEmployees>());
         }
 
         // POST: api/Login

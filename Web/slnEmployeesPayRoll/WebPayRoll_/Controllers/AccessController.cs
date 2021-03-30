@@ -57,7 +57,7 @@ namespace WebPayRoll_.Controllers
                         responser_.Data = userLogged;
 
                     //Generate a Token
-                        Guid tokenLogged = new Guid();
+                        Guid tokenLogged = Guid.NewGuid();
                         userLogged.Token = tokenLogged.ToString();
 
                         Employees_Tab empTab = PayRollDB.Employees_Tab.Where( item => item.EmployeeID == userLogged.UserID ).ToList().FirstOrDefault();

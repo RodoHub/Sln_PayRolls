@@ -1,0 +1,155 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "WebApi_PayRoll"
+  },
+  "host": "localhost:44336",
+  "schemes": [ "https" ],
+  "paths": {
+    "/api/Access/GettingInfo": {
+      "get": {
+        "tags": [ "Access" ],
+        "operationId": "Access_GettingInfo",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "type": "string" }
+          }
+        }
+      }
+    },
+    "/api/Access/Login": {
+      "post": {
+        "tags": [ "Access" ],
+        "operationId": "Access_Login",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "loginEntity_",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_LoginEntity" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Access/LogOff/{id}": {
+      "post": {
+        "tags": [ "Access" ],
+        "operationId": "Access_LogOff",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Auth/CreateTokenAuth": {
+      "post": {
+        "tags": [ "Auth" ],
+        "operationId": "Auth_CreateTokenAuth",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Auth/DisableTokenAuth": {
+      "post": {
+        "tags": [ "Auth" ],
+        "operationId": "Auth_DisableTokenAuth",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Auth/ValidateAuthorization": {
+      "post": {
+        "tags": [ "Auth" ],
+        "operationId": "Auth_ValidateAuthorization",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AM_LoginEntity": {
+      "type": "object",
+      "properties": {
+        "userName": { "type": "string" },
+        "password": { "type": "string" }
+      }
+    },
+    "Responser": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "statusMessage": { "type": "string" },
+        "data": { "type": "object" }
+      }
+    }
+  }
+}

@@ -11,13 +11,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{91E546DC
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0E17FF75-AAFB-4D7E-8681-09D000777489}"
+	ProjectSection(SolutionItems) = preProject
+		3. OAuthToken.sql = 3. OAuthToken.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Default = Default|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C277ADED-0DE3-4B1D-BF42-B5821E0F72D3}.Default|Default.ActiveCfg = Default
+		{FCBFF523-B2D5-466E-A911-7572C9134292}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

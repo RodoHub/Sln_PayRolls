@@ -16,9 +16,27 @@ namespace WebPayRoll_.Controllers
         #region "------------------------------------------- Properties & Members -----------------------------------------"
 
             /// <summary>
+            /// Holds the instance of Client Api PayRoll 'via Swagger'
+            /// </summary>
+             private WebApiPayRoll clientSwagger_ApiPayRoll = new WebApiPayRoll();
+
+
+            /// <summary>
             /// Holds instance of PayRoll
             /// </summary>
             private readonly PayrollEmployeesEntities PayRollDB = new PayrollEmployeesEntities();
+
+
+            /// <summary>
+            /// Holds an Auth Token
+            /// </summary>
+            private string Token 
+            { 
+                get 
+                { 
+                    return (Session["Token"] == null ? string.Empty : Session["Token"].ToString());
+                }
+            }
 
         #endregion
 
@@ -46,14 +64,11 @@ namespace WebPayRoll_.Controllers
             /// <returns></returns>
             public ActionResult UserLogin(string user="", string pws = "", int SignOut = 0)
             {
-
                 if(SignOut != 0) 
-                {
-                    AccessController accessor = new AccessController();
-                    
+                {                                      
                     if(Session["UserIDLogged"]!= null) 
                     {
-                        accessor.LogOff(Session["UserIDLogged"].ToString());                
+                        clientSwagger_ApiPayRoll.Access.LogOff(Session["UserIDLogged"].ToString());                
                     }
 
                     Session["UserLogged"] = null;
@@ -65,10 +80,8 @@ namespace WebPayRoll_.Controllers
 
                 if(!string.IsNullOrWhiteSpace(user) && !string.IsNullOrWhiteSpace(pws))
                 {
-
-                    AccessController accessor = new AccessController();
-
-                    MUser userToLogin = accessor.Login(new LoginEntity() { UserName = user, Password = pws }).Data.Get<MUser>();
+                    clientSwagger_ApiPayRoll = new WebApiPayRoll();
+                    MUser userToLogin = clientSwagger_ApiPayRoll.Access.Login(new Models.AMLoginEntity() { UserName = user, Password = pws }).Data.GetFromJSon<MUser>();
 
                     if (userToLogin == null) 
                     {
@@ -78,6 +91,7 @@ namespace WebPayRoll_.Controllers
                     Session["UserLogged"] = userToLogin.Name;
                     Session["RoleLogged"] = userToLogin.RoleName;
                     Session["UserIDLogged"] = userToLogin.UserID;
+                    Session["Token"] = userToLogin.Token;
 
                     return Json(Url.Content("~/Home/" + (userToLogin.RoleName == "Admin" ? "DashboardAdmin" : "DashboardAdmin")), JsonRequestBehavior.AllowGet);
 
@@ -150,11 +164,18 @@ namespace WebPayRoll_.Controllers
             /// <returns></returns>
             public ActionResult EmployeesManagement(int active = -1) 
             {
-                EmployeesController employees = new EmployeesController();
+                //EmployeesController employees = new EmployeesController(this.Token);
             
                 ViewBag.ActiveFlag = (active == 1 ? true : false);
 
-                return View((active == -1 ? employees.Get() : employees.Get().Where(item => item.Active == (active == 1 ? true : false) )));
+                return View
+                       (
+                            (
+                                active == -1 ? 
+                                clientSwagger_ApiPayRoll.Employees.Get(new Models.AMEmployee { Token = Guid.Parse( this.Token ) }).Data.GetAllFromJSon<MEmployees>().ToList() : 
+                                clientSwagger_ApiPayRoll.Employees.Get(new Models.AMEmployee { Token = Guid.Parse( this.Token ) }).Data.GetAllFromJSon<MEmployees>().ToList().Where(item => item.Active == (active == 1 ? true : false) )
+                            )
+                       );
             }
 
             /// <summary>

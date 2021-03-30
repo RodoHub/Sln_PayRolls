@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Newtonsoft;
-using Newtonsoft.Json;
 
-namespace WebPayRoll_.Models.Api
+namespace WebApi_PayRoll.Models.Api
 {
     /// <summary>
     /// Holds information returned by a WebApi
@@ -71,38 +70,6 @@ namespace WebPayRoll_.Models.Api
                     return itemToReturn;
     
                 }
-
-            /// <summary>
-            /// Get information within Data
-            /// </summary>
-            /// <typeparam name="T">Type of item</typeparam>
-            /// <returns></returns>
-                public static T GetFromJSon<T>(this object data_) 
-                {
-                    string dataJsonString = data_.ToString();
-            
-                    T itemToReturn = dataJsonString.MapFromJson<T>();
-   
-                    return itemToReturn;
-    
-                }
-
-
-            /// <summary>
-            /// Get information within Data
-            /// </summary>
-            /// <typeparam name="T">Type of item</typeparam>
-            /// <returns></returns>
-                public static List<T> GetAllFromJSon<T>(this object data_) 
-                {
-                    string dataJsonString = data_.ToString();
-            
-                    List<T> itemToReturn = dataJsonString.MapFromJson<List<T>>();
-   
-                    return itemToReturn;
-    
-                }
-
     
         #endregion
     
@@ -133,6 +100,7 @@ namespace WebPayRoll_.Models.Api
                 }
         
         #endregion
+
 
     }            
             

@@ -33,7 +33,6 @@ namespace WebPayRoll_.Models.Classes
             }
         }
 
-        private MPayRoll payRoll_;
         public MPayRoll PayRoll_
         {
             get
