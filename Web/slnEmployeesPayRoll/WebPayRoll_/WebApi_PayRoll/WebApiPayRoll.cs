@@ -62,13 +62,16 @@ namespace WebPayRoll_
         /// </summary>
         public virtual IPayRollInfo PayRollInfo { get; private set; }
 
-        public WebApiPayRoll() 
-        { 
-        
+        /// <summary>
+        /// Main constructor
+        /// </summary>
+        public WebApiPayRoll()
+        {
+            this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebApiPayRoll1 class.
+        /// Initializes a new instance of the WebApiPayRoll class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -79,7 +82,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebApiPayRoll1 class.
+        /// Initializes a new instance of the WebApiPayRoll class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -93,7 +96,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebApiPayRoll1 class.
+        /// Initializes a new instance of the WebApiPayRoll class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -111,7 +114,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebApiPayRoll1 class.
+        /// Initializes a new instance of the WebApiPayRoll class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -132,7 +135,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebApiPayRoll1 class.
+        /// Initializes a new instance of the WebApiPayRoll class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -154,7 +157,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebApiPayRoll1 class.
+        /// Initializes a new instance of the WebApiPayRoll class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -179,7 +182,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebApiPayRoll1 class.
+        /// Initializes a new instance of the WebApiPayRoll class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -209,7 +212,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebApiPayRoll1 class.
+        /// Initializes a new instance of the WebApiPayRoll class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.

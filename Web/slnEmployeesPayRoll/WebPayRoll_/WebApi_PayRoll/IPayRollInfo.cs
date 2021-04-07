@@ -18,6 +18,45 @@ namespace WebPayRoll_
     public partial interface IPayRollInfo
     {
         /// <summary>
+        /// Get a PayRollInfo from an Employee
+        /// </summary>
+        /// <param name='payRollInfo'>
+        /// PayRoll Info model
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<Responser>> GetWithHttpMessagesAsync(AMPayRollInfo payRollInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get a PayRollInfo from an Employee
+        /// </summary>
+        /// <param name='payRollInfo'>
+        /// PayRoll Info model
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<Responser>> GetInfoByIDWithHttpMessagesAsync(AMPayRollInfo payRollInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get PayRolls Info
+        /// </summary>
+        /// <param name='payRollInfo'>
+        /// PayRoll Info model
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<Responser>> GetAllWithHttpMessagesAsync(AMPayRollInfo payRollInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Adds a PayRollInfo for an employee within Employee PayRoll
         /// </summary>
         /// <param name='payRollInfo'>
@@ -60,6 +99,7 @@ namespace WebPayRoll_
         /// Generate Token Auth
         /// </summary>
         /// <param name='userId'>
+        /// ID
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,6 +112,7 @@ namespace WebPayRoll_
         /// Generate Token Auth
         /// </summary>
         /// <param name='userId'>
+        /// ID
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

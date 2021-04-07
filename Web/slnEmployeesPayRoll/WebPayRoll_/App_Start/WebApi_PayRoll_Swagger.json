@@ -7,23 +7,10 @@
   "host": "localhost:44336",
   "schemes": [ "https" ],
   "paths": {
-    "/api/Access/GettingInfo": {
-      "get": {
-        "tags": [ "Access" ],
-        "operationId": "Access_GettingInfo",
-        "consumes": [],
-        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": { "type": "string" }
-          }
-        }
-      }
-    },
     "/api/Access/Login": {
       "post": {
         "tags": [ "Access" ],
+        "summary": "Logins a User",
         "operationId": "Access_Login",
         "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
         "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
@@ -31,6 +18,7 @@
           {
             "name": "loginEntity_",
             "in": "body",
+            "description": "Entity for parametizing this action",
             "required": true,
             "schema": { "$ref": "#/definitions/AM_LoginEntity" }
           }
@@ -46,6 +34,7 @@
     "/api/Access/LogOff/{id}": {
       "post": {
         "tags": [ "Access" ],
+        "summary": "Logs Off a User",
         "operationId": "Access_LogOff",
         "consumes": [],
         "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
@@ -53,6 +42,7 @@
           {
             "name": "id",
             "in": "path",
+            "description": "ID",
             "required": true,
             "type": "string"
           }
@@ -68,6 +58,7 @@
     "/api/Auth/CreateTokenAuth": {
       "post": {
         "tags": [ "Auth" ],
+        "summary": "Generate Token Auth",
         "operationId": "Auth_CreateTokenAuth",
         "consumes": [],
         "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
@@ -75,6 +66,7 @@
           {
             "name": "userId",
             "in": "query",
+            "description": "ID",
             "required": false,
             "type": "string"
           }
@@ -90,6 +82,7 @@
     "/api/Auth/DisableTokenAuth": {
       "post": {
         "tags": [ "Auth" ],
+        "summary": "Generate Token Auth",
         "operationId": "Auth_DisableTokenAuth",
         "consumes": [],
         "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
@@ -97,6 +90,7 @@
           {
             "name": "userId",
             "in": "query",
+            "description": "ID",
             "required": false,
             "type": "string"
           }
@@ -112,6 +106,7 @@
     "/api/Auth/ValidateAuthorization": {
       "post": {
         "tags": [ "Auth" ],
+        "summary": "Validates Login a User authorization",
         "operationId": "Auth_ValidateAuthorization",
         "consumes": [],
         "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
@@ -119,6 +114,415 @@
           {
             "name": "token",
             "in": "query",
+            "description": "ID",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Employees/Get": {
+      "post": {
+        "tags": [ "Employees" ],
+        "summary": "Get an Employee from PayRoll",
+        "operationId": "Employees_Get",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "employee",
+            "in": "body",
+            "description": "Employee model",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_Employee" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Employees/GetAll": {
+      "post": {
+        "tags": [ "Employees" ],
+        "summary": "Get Employees from PayRoll",
+        "operationId": "Employees_GetAll",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "employee",
+            "in": "body",
+            "description": "Employee model",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_Employee" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Employees/Post": {
+      "post": {
+        "tags": [ "Employees" ],
+        "summary": "Adds an employee within Employee PayRoll",
+        "operationId": "Employees_Post",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "employee",
+            "in": "body",
+            "description": "Employee Model",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_Employee" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Employees/Put": {
+      "put": {
+        "tags": [ "Employees" ],
+        "summary": "Updates an employee within Employee PayRoll",
+        "operationId": "Employees_Put",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "employee",
+            "in": "body",
+            "description": "Employee Model",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_Employee" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Employees/Delete": {
+      "delete": {
+        "tags": [ "Employees" ],
+        "summary": "Deletes an employee within Employee PayRoll",
+        "operationId": "Employees_Delete",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "employee",
+            "in": "body",
+            "description": "Employee Model",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_Employee" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Employees/CreateTokenAuth": {
+      "post": {
+        "tags": [ "Employees" ],
+        "summary": "Generate Token Auth",
+        "operationId": "Employees_CreateTokenAuth",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Employees/DisableTokenAuth": {
+      "post": {
+        "tags": [ "Employees" ],
+        "summary": "Generate Token Auth",
+        "operationId": "Employees_DisableTokenAuth",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/Employees/ValidateAuthorization": {
+      "post": {
+        "tags": [ "Employees" ],
+        "summary": "Validates Login a User authorization",
+        "operationId": "Employees_ValidateAuthorization",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/Get": {
+      "post": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Get a PayRollInfo from an Employee",
+        "operationId": "PayRollInfo_Get",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "payRollInfo",
+            "in": "body",
+            "description": "PayRoll Info model",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_PayRollInfo" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/GetInfoByID": {
+      "post": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Get a PayRollInfo from an Employee",
+        "operationId": "PayRollInfo_GetInfoByID",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "payRollInfo",
+            "in": "body",
+            "description": "PayRoll Info model",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_PayRollInfo" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/GetAll": {
+      "post": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Get PayRolls Info",
+        "operationId": "PayRollInfo_GetAll",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "payRollInfo",
+            "in": "body",
+            "description": "PayRoll Info model",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_PayRollInfo" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/Post": {
+      "post": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Adds a PayRollInfo for an employee within Employee PayRoll",
+        "operationId": "PayRollInfo_Post",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "payRollInfo_",
+            "in": "body",
+            "description": "PayRollInfo to add to current Employee",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_PayRollInfo" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/Put": {
+      "put": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Updates a PayRollInfo for an employee within Employee PayRoll",
+        "operationId": "PayRollInfo_Put",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "payRollInfo_",
+            "in": "body",
+            "description": "PayRollInfo to add to current Employee",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_PayRollInfo" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/Delete": {
+      "delete": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Deletes a PayRollInfo for an employee within Employee PayRoll",
+        "operationId": "PayRollInfo_Delete",
+        "consumes": [ "application/json", "text/json", "application/xml", "text/xml", "application/x-www-form-urlencoded" ],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "payRollInfo_",
+            "in": "body",
+            "description": "PayRollInfo to add to current Employee",
+            "required": true,
+            "schema": { "$ref": "#/definitions/AM_PayRollInfo" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/CreateTokenAuth": {
+      "post": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Generate Token Auth",
+        "operationId": "PayRollInfo_CreateTokenAuth",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/DisableTokenAuth": {
+      "post": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Generate Token Auth",
+        "operationId": "PayRollInfo_DisableTokenAuth",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/Responser" }
+          }
+        }
+      }
+    },
+    "/api/PayRollInfo/ValidateAuthorization": {
+      "post": {
+        "tags": [ "PayRollInfo" ],
+        "summary": "Validates Login a User authorization",
+        "operationId": "PayRollInfo_ValidateAuthorization",
+        "consumes": [],
+        "produces": [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "ID",
             "required": false,
             "type": "string"
           }
@@ -134,21 +538,157 @@
   },
   "definitions": {
     "AM_LoginEntity": {
+      "description": "Holds information returned by a WebApi",
       "type": "object",
       "properties": {
-        "userName": { "type": "string" },
-        "password": { "type": "string" }
+        "userName": {
+          "description": "User name",
+          "type": "string"
+        },
+        "password": {
+          "description": "User name",
+          "type": "string"
+        }
       }
     },
     "Responser": {
+      "description": "Holds information returned by a WebApi",
       "type": "object",
       "properties": {
         "status": {
           "format": "int32",
+          "description": "Status Code returned",
           "type": "integer"
         },
-        "statusMessage": { "type": "string" },
-        "data": { "type": "object" }
+        "statusMessage": {
+          "description": "Status Message description",
+          "type": "string"
+        },
+        "data": {
+          "description": "Information returned",
+          "type": "object"
+        }
+      }
+    },
+    "AM_Employee": {
+      "description": "Api Model Employee: Holds information related to Employees",
+      "type": "object",
+      "properties": {
+        "employeeID": {
+          "format": "int32",
+          "description": "Employee ID",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Employee Name",
+          "type": "string"
+        },
+        "lastNames": {
+          "description": "Employee Last Names",
+          "type": "string"
+        },
+        "admissionDate": {
+          "format": "date-time",
+          "description": "Employee Admission Date",
+          "type": "string"
+        },
+        "roleID": {
+          "format": "int32",
+          "description": "Employee Role ID",
+          "type": "integer"
+        },
+        "email": {
+          "description": "Employee Email",
+          "type": "string"
+        },
+        "password": {
+          "description": "Employee Password",
+          "type": "string"
+        },
+        "active": {
+          "description": "Employee Status",
+          "type": "boolean"
+        },
+        "roleName": {
+          "description": "Employee Role Name",
+          "type": "string"
+        },
+        "token": {
+          "format": "uuid",
+          "description": "Token authorization",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "AM_PayRollInfo": {
+      "description": "Api Model PayRollInfo: Holds information related to PayRoll information detailed",
+      "type": "object",
+      "properties": {
+        "payRollInfoID": {
+          "format": "int32",
+          "description": "ID for PayRoll Info",
+          "type": "integer"
+        },
+        "baseSalary": {
+          "format": "double",
+          "description": "(Amount) Base Salary for Employee",
+          "type": "number"
+        },
+        "breakfastDeduction": {
+          "format": "double",
+          "description": "(Percentage %) BreakFast Deduction",
+          "type": "number"
+        },
+        "savingDeduction": {
+          "format": "double",
+          "description": "(Percentage %) Saving Deduction",
+          "type": "number"
+        },
+        "active": {
+          "description": "Status of PayRoll Info",
+          "type": "boolean"
+        },
+        "creationDate": {
+          "format": "date-time",
+          "description": "Creation Date of PayRoll info",
+          "type": "string"
+        },
+        "employeeID": {
+          "format": "int32",
+          "description": "Employee ID",
+          "type": "integer"
+        },
+        "breakfastDeductionAmount": {
+          "format": "double",
+          "description": "(Amount) BreakFast Deduction",
+          "type": "number",
+          "readOnly": true
+        },
+        "savingDeductionAmount": {
+          "format": "double",
+          "description": "(Amount) Saving Deduction",
+          "type": "number",
+          "readOnly": true
+        },
+        "totalDeductions": {
+          "format": "double",
+          "description": "(Amount) Total Deductions",
+          "type": "number",
+          "readOnly": true
+        },
+        "netSalary": {
+          "format": "double",
+          "description": "(Amount) Net Salary",
+          "type": "number",
+          "readOnly": true
+        },
+        "token": {
+          "format": "uuid",
+          "description": "Token authorization",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
       }
     }
   }

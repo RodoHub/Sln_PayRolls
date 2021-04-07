@@ -21,6 +21,7 @@ namespace WebPayRoll_
         /// Logins a User
         /// </summary>
         /// <param name='loginEntity'>
+        /// Entity for parametizing this action
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

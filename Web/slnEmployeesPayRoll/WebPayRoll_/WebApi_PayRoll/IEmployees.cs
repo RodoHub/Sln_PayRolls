@@ -86,6 +86,7 @@ namespace WebPayRoll_
         /// Generate Token Auth
         /// </summary>
         /// <param name='userId'>
+        /// ID
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -98,6 +99,7 @@ namespace WebPayRoll_
         /// Generate Token Auth
         /// </summary>
         /// <param name='userId'>
+        /// ID
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

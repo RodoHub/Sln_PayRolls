@@ -18,6 +18,108 @@ namespace WebPayRoll_
     public static partial class PayRollInfoExtensions
     {
             /// <summary>
+            /// Get a PayRollInfo from an Employee
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='payRollInfo'>
+            /// PayRoll Info model
+            /// </param>
+            public static Responser Get(this IPayRollInfo operations, AMPayRollInfo payRollInfo)
+            {
+                return Task.Factory.StartNew(s => ((IPayRollInfo)s).GetAsync(payRollInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a PayRollInfo from an Employee
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='payRollInfo'>
+            /// PayRoll Info model
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Responser> GetAsync(this IPayRollInfo operations, AMPayRollInfo payRollInfo, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(payRollInfo, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get a PayRollInfo from an Employee
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='payRollInfo'>
+            /// PayRoll Info model
+            /// </param>
+            public static Responser GetInfoByID(this IPayRollInfo operations, AMPayRollInfo payRollInfo)
+            {
+                return Task.Factory.StartNew(s => ((IPayRollInfo)s).GetInfoByIDAsync(payRollInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a PayRollInfo from an Employee
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='payRollInfo'>
+            /// PayRoll Info model
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Responser> GetInfoByIDAsync(this IPayRollInfo operations, AMPayRollInfo payRollInfo, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetInfoByIDWithHttpMessagesAsync(payRollInfo, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get PayRolls Info
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='payRollInfo'>
+            /// PayRoll Info model
+            /// </param>
+            public static Responser GetAll(this IPayRollInfo operations, AMPayRollInfo payRollInfo)
+            {
+                return Task.Factory.StartNew(s => ((IPayRollInfo)s).GetAllAsync(payRollInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get PayRolls Info
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='payRollInfo'>
+            /// PayRoll Info model
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Responser> GetAllAsync(this IPayRollInfo operations, AMPayRollInfo payRollInfo, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAllWithHttpMessagesAsync(payRollInfo, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Adds a PayRollInfo for an employee within Employee PayRoll
             /// </summary>
             /// <param name='operations'>
@@ -126,6 +228,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='userId'>
+            /// ID
             /// </param>
             public static Responser CreateTokenAuth(this IPayRollInfo operations, string userId = default(string))
             {
@@ -139,6 +242,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='userId'>
+            /// ID
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -158,6 +262,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='userId'>
+            /// ID
             /// </param>
             public static Responser DisableTokenAuth(this IPayRollInfo operations, string userId = default(string))
             {
@@ -171,6 +276,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='userId'>
+            /// ID
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

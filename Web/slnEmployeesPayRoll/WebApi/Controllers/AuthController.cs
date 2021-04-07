@@ -30,7 +30,7 @@ namespace WebApi_PayRoll.Controllers
         /// <summary>
         /// Generate Token Auth
         /// </summary>
-        /// <param name="token">ID</param>
+        /// <param name="userId">ID</param>
         /// <returns></returns>
         [HttpPost]
         public Responser CreateTokenAuth(string userId = "")
@@ -98,7 +98,7 @@ namespace WebApi_PayRoll.Controllers
         /// <summary>
         /// Generate Token Auth
         /// </summary>
-        /// <param name="token">ID</param>
+        /// <param name="userId">ID</param>
         /// <returns></returns>
         [HttpPost]
         public Responser DisableTokenAuth(string userId = "")

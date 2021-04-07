@@ -10,8 +10,19 @@ namespace WebApi_PayRoll.Models.Entities
     /// </summary>
     public class AM_Role
     {
+        /// <summary>
+        /// Role ID
+        /// </summary>
         public int RoleID { get; set; }
+
+        /// <summary>
+        /// Role Name
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Role Description
+        /// </summary>
         public string Description { get; set; }
 
     }

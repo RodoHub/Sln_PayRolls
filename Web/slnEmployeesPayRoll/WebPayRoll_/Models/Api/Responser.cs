@@ -97,7 +97,9 @@ namespace WebPayRoll_.Models.Api
                 {
                     string dataJsonString = data_.ToString();
             
-                    List<T> itemToReturn = dataJsonString.MapFromJson<List<T>>();
+                    var itemToReturn_ = dataJsonString.MapAllFromJson();                    
+
+                    List<T> itemToReturn = dataJsonString .MapFromJson<List<T>>();
    
                     return itemToReturn;
     
@@ -131,6 +133,20 @@ namespace WebPayRoll_.Models.Api
         
                     return jsonDeserialized;
                 }
+
+            /// <summary>
+            /// Get a Json deserialized from a Json Format
+            /// </summary>
+            /// <param name="json">Json string</param>
+            /// <returns>Mapped information</returns>
+                public static dynamic MapAllFromJson(this string json)
+                {
+                    var jsonDeserialized = JsonConvert.DeserializeObject(json);
+        
+                    return jsonDeserialized;
+                }
+
+
         
         #endregion
 

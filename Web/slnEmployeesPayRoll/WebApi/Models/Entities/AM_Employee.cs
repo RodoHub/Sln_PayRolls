@@ -50,14 +50,45 @@ namespace WebApi_PayRoll.Models.Entities
         /// </summary>
         public Nullable<bool> Active { get; set; }
 
+
         /// <summary>
         /// Employee Role Name
         /// </summary>
-        public string RoleName { get; set; }
+        private string roleName;
+
+        /// <summary>
+        /// Employee Role Name
+        /// </summary>
+        public string RoleName 
+        {
+            get
+            {
+                return (roleName == null ? string.Empty : roleName);
+            }
+            set
+            {
+                roleName = value;
+            }
+        }
 
         /// <summary>
         /// Token authorization
         /// </summary>
-        public Nullable<System.Guid> Token { get; set; }
+        private Nullable<System.Guid> token;
+
+        /// <summary>
+        /// Token authorization
+        /// </summary>
+        public Nullable<System.Guid> Token 
+        {
+            get 
+            { 
+                return (token == null ? new Guid() :  token);
+            }
+            set
+            {
+                token = value;
+            }
+        }
     }
 }

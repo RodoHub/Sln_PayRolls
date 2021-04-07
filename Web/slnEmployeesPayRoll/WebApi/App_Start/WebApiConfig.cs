@@ -5,8 +5,15 @@ using System.Web.Http;
 
 namespace WebApi_PayRoll
 {
+    /// <summary>
+    /// Web Api Config class
+    /// </summary>
     public static class WebApiConfig
     {
+        /// <summary>
+        /// Register method
+        /// </summary>
+        /// <param name="config">Http Configuration</param>
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services

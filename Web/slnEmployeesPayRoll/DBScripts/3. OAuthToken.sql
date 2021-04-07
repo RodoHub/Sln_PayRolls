@@ -48,8 +48,18 @@ GO
 
 --ROLLBACK
 --COMMIT
-
-
+SELECT * FROM PayRoll_Tab
+SELECT * FROM PayRollInfo_Tab
 SELECT * FROM Employees_Tab
 SELECT * FROM TokenAuth
 SELECT * FROM TokenStatus
+--BEGIN TRAN
+--DELETE FROM PayRollInfo_Tab WHERE PayRollInfoID >= 5
+--DELETE FROM Employees_Tab  WHERE EmployeeID >= 5
+--COMMIT
+
+--BEGIN TRAN
+--UPDATE TokenAuth SET TokenStatusID = 2 
+--COMMIT
+
+

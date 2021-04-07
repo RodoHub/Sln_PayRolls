@@ -40,7 +40,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Gets a reference to the WebApiPayRoll1
+        /// Gets a reference to the WebApiPayRoll
         /// </summary>
         public WebApiPayRoll Client { get; private set; }
 
@@ -683,6 +683,7 @@ namespace WebPayRoll_
         /// Generate Token Auth
         /// </summary>
         /// <param name='userId'>
+        /// ID
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -808,6 +809,7 @@ namespace WebPayRoll_
         /// Generate Token Auth
         /// </summary>
         /// <param name='userId'>
+        /// ID
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

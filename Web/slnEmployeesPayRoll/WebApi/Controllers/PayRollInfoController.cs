@@ -19,7 +19,7 @@ namespace WebApi_PayRoll.Controllers
         /// <summary>
         /// Holds instance of PayRoll
         /// </summary>
-        private readonly PayRollDB_ PayRollDB = new PayRollDB_();
+        private PayRollDB_ PayRollDB;
 
         /// <summary>
         /// Holds instance of PayRoll
@@ -40,67 +40,105 @@ namespace WebApi_PayRoll.Controllers
 
         }
 
-        ///// <summary>
-        ///// Get an Employee from PayRoll
-        ///// </summary>
-        ///// <param name="employee">Employee model</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public Responser Get([FromBody] AM_Employee employee)
-        //{
-        //    try 
-        //    {
-        //        responser_ = this.ValidateAuthorization(employee.Token.ToString());
+        /// <summary>
+        /// Get a PayRollInfo from an Employee
+        /// </summary>
+        /// <param name="payRollInfo">PayRoll Info model</param>
+        /// <returns></returns>
+        [HttpPost]
+        public Responser Get([FromBody] AM_PayRollInfo payRollInfo)
+        {
+            try 
+            {
+                PayRollDB = new PayRollDB_();
 
-        //        if (responser_.Data.Get<bool>()) 
-        //        {
-        //            responser_.Data = PayRollDB.Employees_Tab.ToList().MapTo<Employees_Tab, AM_Employee>().Where(item => item.EmployeeID.ToString() == employee.EmployeeID.ToString()).ToList().FirstOrDefault();
-        //            responser_.Status = 0;
-        //            responser_.StatusMessage = "Operation Get successfully";
-        //        }
+                responser_ = this.ValidateAuthorization(payRollInfo.Token.ToString());
 
-        //        return responser_;
-        //    }
-        //    catch (Exception e) 
-        //    {
-        //        responser_.Data = null ;
-        //        responser_.Status = -1;
-        //        responser_.StatusMessage = e.Message.ToString();
+                if (responser_.Data.Get<bool>()) 
+                {
+                    responser_.Data = PayRollDB.PayRollInfo_Tab.ToList().MapTo<PayRollInfo_Tab, AM_PayRollInfo>().Where(item => item.EmployeeID.ToString() == payRollInfo.EmployeeID.ToString()).ToList().FirstOrDefault();
+                    responser_.Status = 0;
+                    responser_.StatusMessage = "Operation Get successfully";
+                }
 
-        //        return responser_;
-        //    }
-        //}
+                return responser_;
+            }
+            catch (Exception e) 
+            {
+                responser_.Data = null ;
+                responser_.Status = -1;
+                responser_.StatusMessage = e.Message.ToString();
 
-        ///// <summary>
-        ///// Get Employees from PayRoll
-        ///// </summary>
-        ///// <param name="employee">Employee model</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public Responser GetAll([FromBody] AM_Employee employee)
-        //{
-        //    try 
-        //    {
-        //        responser_ = this.ValidateAuthorization(employee.Token.ToString());
+                return responser_;
+            }
+        }
 
-        //        if (responser_.Data.Get<bool>()) 
-        //        {
-        //            responser_.Data = PayRollDB.Employees_Tab.ToList().MapTo<Employees_Tab, AM_Employee>().ToList();
-        //            responser_.Status = 0;
-        //            responser_.StatusMessage = "Operation Get successfully";
-        //        }
+        /// <summary>
+        /// Get a PayRollInfo from an Employee
+        /// </summary>
+        /// <param name="payRollInfo">PayRoll Info model</param>
+        /// <returns></returns>
+            [HttpPost]
+            public Responser GetInfoByID([FromBody] AM_PayRollInfo payRollInfo)
+            {
+                try 
+                {
+                    PayRollDB = new PayRollDB_();
 
-        //        return responser_;
-        //    }
-        //    catch (Exception e) 
-        //    {
-        //        responser_.Data = null ;
-        //        responser_.Status = -1;
-        //        responser_.StatusMessage = e.Message.ToString();
+                    responser_ = this.ValidateAuthorization(payRollInfo.Token.ToString());
 
-        //        return responser_;
-        //    }
-        //}
+                    if (responser_.Data.Get<bool>()) 
+                    {
+                        responser_.Data = PayRollDB.PayRollInfo_Tab.ToList().MapTo<PayRollInfo_Tab, AM_PayRollInfo>().Where(item => item.EmployeeID.ToString() == payRollInfo.PayRollInfoID.ToString()).ToList().FirstOrDefault();
+                        responser_.Status = 0;
+                        responser_.StatusMessage = "Operation Get successfully";
+                    }
+
+                    return responser_;
+                }
+                catch (Exception e) 
+                {
+                    responser_.Data = null ;
+                    responser_.Status = -1;
+                    responser_.StatusMessage = e.Message.ToString();
+
+                    return responser_;
+                }
+            }
+
+
+        /// <summary>
+        /// Get PayRolls Info
+        /// </summary>
+        /// <param name="payRollInfo">PayRoll Info model</param>
+        /// <returns></returns>
+        [HttpPost]
+        public Responser GetAll([FromBody] AM_PayRollInfo payRollInfo)
+        {
+            try 
+            {
+                PayRollDB = new PayRollDB_();
+
+                responser_ = this.ValidateAuthorization(payRollInfo.Token.ToString());
+
+                if (responser_.Data.Get<bool>()) 
+                {
+                    responser_.Data = PayRollDB.PayRollInfo_Tab.ToList().MapTo<PayRollInfo_Tab, AM_PayRollInfo>().ToList();
+                    responser_.Status = 0;
+                    responser_.StatusMessage = "Operation Get successfully";
+                }
+
+                return responser_;
+            }
+            catch (Exception e) 
+            {
+                responser_.Data = null ;
+                responser_.Status = -1;
+                responser_.StatusMessage = e.Message.ToString();
+
+                return responser_;
+            }
+        }
 
         /// <summary>
         /// Adds a PayRollInfo for an employee within Employee PayRoll
@@ -111,6 +149,8 @@ namespace WebApi_PayRoll.Controllers
         {
             try 
             {
+                PayRollDB = new PayRollDB_();
+
                 responser_ = this.ValidateAuthorization(payRollInfo_.Token.ToString());
 
                 if (responser_.Data.Get<bool>()) 
@@ -121,7 +161,7 @@ namespace WebApi_PayRoll.Controllers
                     payRollInfo.BreakfastDeduction = payRollInfo_.BreakfastDeduction;
                     payRollInfo.SavingDeduction = payRollInfo_.SavingDeduction;
                     payRollInfo.CreationDate = DateTime.Now;
-                    payRollInfo.Active = payRollInfo.Active;
+                    payRollInfo.Active = payRollInfo_.Active;
 
                     PayRollDB.PayRollInfo_Tab.Add(payRollInfo);
                     PayRollDB.SaveChanges();
@@ -154,6 +194,8 @@ namespace WebApi_PayRoll.Controllers
         {
             try 
             {
+                PayRollDB = new PayRollDB_();
+
                 responser_ = this.ValidateAuthorization(payRollInfo_.Token.ToString());
 
                 if (responser_.Data.Get<bool>()) 
@@ -200,6 +242,8 @@ namespace WebApi_PayRoll.Controllers
         {
             try
             {
+                PayRollDB = new PayRollDB_();
+
                 responser_ = this.ValidateAuthorization(payRollInfo_.Token.ToString());
 
                 if (responser_.Data.Get<bool>()) 

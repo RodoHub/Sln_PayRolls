@@ -29,6 +29,9 @@ namespace WebApi_PayRoll.Models.Api
       
     }
 
+    /// <summary>
+    /// Extensions for Resonser
+    /// </summary>
     public static class ResponserExtended
     {
     

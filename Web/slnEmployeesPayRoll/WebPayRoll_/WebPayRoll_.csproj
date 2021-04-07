@@ -167,12 +167,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AuthController.cs" />
-    <Compile Include="Controllers\AccessController.cs" />
     <Compile Include="Controllers\PayRollController.cs" />
-    <Compile Include="Controllers\PayRollInfoController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\FilterSession.cs" />
     <Compile Include="Global.asax.cs">
@@ -180,6 +177,7 @@
     </Compile>
     <Compile Include="Models\Api\LoginEntity.cs" />
     <Compile Include="Models\Api\Responser.cs" />
+    <Compile Include="Models\Classes\MBase.cs" />
     <Compile Include="Models\Classes\MUser.cs" />
     <Compile Include="Models\Classes\MEmployeeEnt.cs" />
     <Compile Include="Models\Classes\MPayRoll.cs" />

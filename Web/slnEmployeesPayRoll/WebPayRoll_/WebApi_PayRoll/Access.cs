@@ -40,7 +40,7 @@ namespace WebPayRoll_
         }
 
         /// <summary>
-        /// Gets a reference to the WebApiPayRoll1
+        /// Gets a reference to the WebApiPayRoll
         /// </summary>
         public WebApiPayRoll Client { get; private set; }
 
@@ -48,6 +48,7 @@ namespace WebPayRoll_
         /// Logins a User
         /// </summary>
         /// <param name='loginEntity'>
+        /// Entity for parametizing this action
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -10,7 +10,13 @@ namespace WebApi_PayRoll.Models.Entities
     /// </summary>
     public class AM_Catalog
     {
+        /// <summary>
+        /// ID Catalog
+        /// </summary>
         public int ID { get; set; }
+        /// <summary>
+        /// Catalog Name
+        /// </summary>
         public string Name { get; set; }
     }
 }

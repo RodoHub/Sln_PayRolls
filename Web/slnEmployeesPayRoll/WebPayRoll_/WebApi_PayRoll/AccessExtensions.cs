@@ -24,6 +24,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='loginEntity'>
+            /// Entity for parametizing this action
             /// </param>
             public static Responser Login(this IAccess operations, AMLoginEntity loginEntity)
             {
@@ -37,6 +38,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='loginEntity'>
+            /// Entity for parametizing this action
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -11,6 +11,9 @@ namespace WebApi_PayRoll.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
 
+    /// <summary>
+    /// Class for holding information returned by a WebApi
+    /// </summary>
     public partial class Responser
     {
         /// <summary>

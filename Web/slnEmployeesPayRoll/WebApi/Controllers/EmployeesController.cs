@@ -19,7 +19,7 @@ namespace WebApi_PayRoll.Controllers
         /// <summary>
         /// Holds instance of PayRoll
         /// </summary>
-        private readonly PayRollDB_ PayRollDB = new PayRollDB_();
+        private PayRollDB_ PayRollDB;
 
         /// <summary>
         /// Holds instance of PayRoll
@@ -50,6 +50,8 @@ namespace WebApi_PayRoll.Controllers
         {
             try 
             {
+                PayRollDB = new PayRollDB_();
+
                 responser_ = this.ValidateAuthorization(employee.Token.ToString());
 
                 if (responser_.Data.Get<bool>()) 
@@ -81,6 +83,8 @@ namespace WebApi_PayRoll.Controllers
         {
             try 
             {
+                PayRollDB = new PayRollDB_();
+
                 responser_ = this.ValidateAuthorization(employee.Token.ToString());
 
                 if (responser_.Data.Get<bool>()) 
@@ -111,6 +115,8 @@ namespace WebApi_PayRoll.Controllers
         {
             try 
             {
+                PayRollDB = new PayRollDB_();
+
                 responser_ = this.ValidateAuthorization(employee.Token.ToString());
 
                 if (responser_.Data.Get<bool>()) 
@@ -156,6 +162,8 @@ namespace WebApi_PayRoll.Controllers
         {
             try 
             {
+                PayRollDB = new PayRollDB_();
+
                 responser_ = this.ValidateAuthorization(employee.Token.ToString());
 
                 if (responser_.Data.Get<bool>()) 
@@ -210,6 +218,8 @@ namespace WebApi_PayRoll.Controllers
         {
             try 
             {
+                PayRollDB = new PayRollDB_();
+
                 responser_ = this.ValidateAuthorization(employee.Token.ToString());
 
                 if (responser_.Data.Get<bool>()) 

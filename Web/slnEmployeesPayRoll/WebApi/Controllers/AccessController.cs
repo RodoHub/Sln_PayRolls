@@ -37,7 +37,7 @@ namespace WebApi_PayRoll.Controllers
         /// <summary>
         /// Logins a User 
         /// </summary>
-        /// <param name="id">ID</param>
+        /// <param name="loginEntity_">Entity for parametizing this action</param>
         /// <returns></returns>
         [HttpPost]
         public Responser Login([FromBody] AM_LoginEntity loginEntity_)

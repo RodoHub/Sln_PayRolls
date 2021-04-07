@@ -194,6 +194,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='userId'>
+            /// ID
             /// </param>
             public static Responser CreateTokenAuth(this IEmployees operations, string userId = default(string))
             {
@@ -207,6 +208,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='userId'>
+            /// ID
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -226,6 +228,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='userId'>
+            /// ID
             /// </param>
             public static Responser DisableTokenAuth(this IEmployees operations, string userId = default(string))
             {
@@ -239,6 +242,7 @@ namespace WebPayRoll_
             /// The operations group for this extension method.
             /// </param>
             /// <param name='userId'>
+            /// ID
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
