@@ -29,5 +29,7 @@ namespace WebPayRoll_.Models.DB
         public virtual DbSet<PayRoll_Tab> PayRoll_Tab { get; set; }
         public virtual DbSet<PayRollInfo_Tab> PayRollInfo_Tab { get; set; }
         public virtual DbSet<Role_Cat> Role_Cat { get; set; }
+        public virtual DbSet<TokenAuth> TokenAuth { get; set; }
+        public virtual DbSet<TokenStatus> TokenStatus { get; set; }
     }
 }

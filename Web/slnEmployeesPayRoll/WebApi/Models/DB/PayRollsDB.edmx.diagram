@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cfcf7078d0e845d0b307c9c04594be21" Name="Diagram1">
+        <EntityTypeShape EntityType="PayrollsDBMo.Employees_Tab" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollsDBMo.PayRoll_Tab" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollsDBMo.PayRollInfo_Tab" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollsDBMo.Role_Cat" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollsDBMo.TokenAuth" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollsDBMo.TokenStatus" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="PayrollsDBMo.FK__Employees__RoleI__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollsDBMo.FK__PayRollIn__Emplo__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollsDBMo.FK__PayRoll_T__PayRo__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="PayrollsDBMo.FK__TokenAuth__Token__60A75C0F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

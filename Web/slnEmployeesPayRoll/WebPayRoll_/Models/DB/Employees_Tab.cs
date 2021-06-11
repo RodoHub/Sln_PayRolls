@@ -28,6 +28,7 @@ namespace WebPayRoll_.Models.DB
         public string Email { get; set; }
         public string Password { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Nullable<System.Guid> Token { get; set; }
     
         public virtual Role_Cat Role_Cat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

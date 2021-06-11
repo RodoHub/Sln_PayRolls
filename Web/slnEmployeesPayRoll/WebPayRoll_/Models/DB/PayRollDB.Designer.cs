@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\santinno\Desktop\Examen RBS - NominaEmpleados\slnEmployeesPayRoll\WebPayRoll_\Models\DB\PayRollDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\MyRepos_\GIT\PayRolls\Web\slnEmployeesPayRoll\WebPayRoll_\Models\DB\PayRollDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PayrollsDBMo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employees_Tab">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="LastNames" Type="varchar" MaxLength="200" />
+          <Property Name="AdmissionDate" Type="datetime" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="Password" Type="varchar" MaxLength="10" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="Token" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="PayRoll_Tab">
+          <Key>
+            <PropertyRef Name="PayRollID" />
+          </Key>
+          <Property Name="PayRollID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InitialPeriod" Type="datetime" />
+          <Property Name="EndPeriod" Type="datetime" />
+          <Property Name="PayRollDate" Type="datetime" />
+          <Property Name="PayRollInfoID" Type="int" />
+        </EntityType>
+        <EntityType Name="PayRollInfo_Tab">
+          <Key>
+            <PropertyRef Name="PayRollInfoID" />
+          </Key>
+          <Property Name="PayRollInfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BaseSalary" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="BreakfastDeduction" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="SavingDeduction" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="EmployeeID" Type="int" />
+        </EntityType>
+        <EntityType Name="Role_Cat">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="TokenAuth">
+          <Key>
+            <PropertyRef Name="TokenAuthID" />
+          </Key>
+          <Property Name="TokenAuthID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="uniqueidentifier" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="TokenStatusID" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="TokenStatus">
+          <Key>
+            <PropertyRef Name="TokenStatusID" />
+          </Key>
+          <Property Name="TokenStatusID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="CreationDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Employees__RoleI__398D8EEE">
+          <End Role="Role_Cat" Type="Self.Role_Cat" Multiplicity="0..1" />
+          <End Role="Employees_Tab" Type="Self.Employees_Tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role_Cat">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Employees_Tab">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PayRoll_T__PayRo__3F466844">
+          <End Role="PayRollInfo_Tab" Type="Self.PayRollInfo_Tab" Multiplicity="0..1" />
+          <End Role="PayRoll_Tab" Type="Self.PayRoll_Tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayRollInfo_Tab">
+              <PropertyRef Name="PayRollInfoID" />
+            </Principal>
+            <Dependent Role="PayRoll_Tab">
+              <PropertyRef Name="PayRollInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PayRollIn__Emplo__3C69FB99">
+          <End Role="Employees_Tab" Type="Self.Employees_Tab" Multiplicity="0..1" />
+          <End Role="PayRollInfo_Tab" Type="Self.PayRollInfo_Tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees_Tab">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="PayRollInfo_Tab">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TokenAuth__Token__60A75C0F">
+          <End Role="TokenStatus" Type="Self.TokenStatus" Multiplicity="0..1" />
+          <End Role="TokenAuth" Type="Self.TokenAuth" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TokenStatus">
+              <PropertyRef Name="TokenStatusID" />
+            </Principal>
+            <Dependent Role="TokenAuth">
+              <PropertyRef Name="TokenStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PayrollsDBMoStoreContainer">
+          <EntitySet Name="Employees_Tab" EntityType="Self.Employees_Tab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayRoll_Tab" EntityType="Self.PayRoll_Tab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayRollInfo_Tab" EntityType="Self.PayRollInfo_Tab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role_Cat" EntityType="Self.Role_Cat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TokenAuth" EntityType="Self.TokenAuth" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TokenStatus" EntityType="Self.TokenStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Employees__RoleI__398D8EEE" Association="Self.FK__Employees__RoleI__398D8EEE">
+            <End Role="Role_Cat" EntitySet="Role_Cat" />
+            <End Role="Employees_Tab" EntitySet="Employees_Tab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PayRoll_T__PayRo__3F466844" Association="Self.FK__PayRoll_T__PayRo__3F466844">
+            <End Role="PayRollInfo_Tab" EntitySet="PayRollInfo_Tab" />
+            <End Role="PayRoll_Tab" EntitySet="PayRoll_Tab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PayRollIn__Emplo__3C69FB99" Association="Self.FK__PayRollIn__Emplo__3C69FB99">
+            <End Role="Employees_Tab" EntitySet="Employees_Tab" />
+            <End Role="PayRollInfo_Tab" EntitySet="PayRollInfo_Tab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TokenAuth__Token__60A75C0F" Association="Self.FK__TokenAuth__Token__60A75C0F">
+            <End Role="TokenStatus" EntitySet="TokenStatus" />
+            <End Role="TokenAuth" EntitySet="TokenAuth" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PayrollsDBMo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employees_Tab">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastNames" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AdmissionDate" Type="DateTime" Precision="3" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="Token" Type="Guid" />
+          <NavigationProperty Name="Role_Cat" Relationship="Self.FK__Employees__RoleI__398D8EEE" FromRole="Employees_Tab" ToRole="Role_Cat" />
+          <NavigationProperty Name="PayRollInfo_Tab" Relationship="Self.FK__PayRollIn__Emplo__3C69FB99" FromRole="Employees_Tab" ToRole="PayRollInfo_Tab" />
+        </EntityType>
+        <EntityType Name="PayRoll_Tab">
+          <Key>
+            <PropertyRef Name="PayRollID" />
+          </Key>
+          <Property Name="PayRollID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InitialPeriod" Type="DateTime" Precision="3" />
+          <Property Name="EndPeriod" Type="DateTime" Precision="3" />
+          <Property Name="PayRollDate" Type="DateTime" Precision="3" />
+          <Property Name="PayRollInfoID" Type="Int32" />
+          <NavigationProperty Name="PayRollInfo_Tab" Relationship="Self.FK__PayRoll_T__PayRo__3F466844" FromRole="PayRoll_Tab" ToRole="PayRollInfo_Tab" />
+        </EntityType>
+        <EntityType Name="PayRollInfo_Tab">
+          <Key>
+            <PropertyRef Name="PayRollInfoID" />
+          </Key>
+          <Property Name="PayRollInfoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaseSalary" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="BreakfastDeduction" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="SavingDeduction" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <NavigationProperty Name="Employees_Tab" Relationship="Self.FK__PayRollIn__Emplo__3C69FB99" FromRole="PayRollInfo_Tab" ToRole="Employees_Tab" />
+          <NavigationProperty Name="PayRoll_Tab" Relationship="Self.FK__PayRoll_T__PayRo__3F466844" FromRole="PayRollInfo_Tab" ToRole="PayRoll_Tab" />
+        </EntityType>
+        <EntityType Name="Role_Cat">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employees_Tab" Relationship="Self.FK__Employees__RoleI__398D8EEE" FromRole="Role_Cat" ToRole="Employees_Tab" />
+        </EntityType>
+        <EntityType Name="TokenAuth">
+          <Key>
+            <PropertyRef Name="TokenAuthID" />
+          </Key>
+          <Property Name="TokenAuthID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token" Type="Guid" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="TokenStatusID" Type="Byte" />
+          <NavigationProperty Name="TokenStatus" Relationship="Self.FK__TokenAuth__Token__60A75C0F" FromRole="TokenAuth" ToRole="TokenStatus" />
+        </EntityType>
+        <EntityType Name="TokenStatus">
+          <Key>
+            <PropertyRef Name="TokenStatusID" />
+          </Key>
+          <Property Name="TokenStatusID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TokenAuth" Relationship="Self.FK__TokenAuth__Token__60A75C0F" FromRole="TokenStatus" ToRole="TokenAuth" />
+        </EntityType>
+        <Association Name="FK__Employees__RoleI__398D8EEE">
+          <End Role="Role_Cat" Type="Self.Role_Cat" Multiplicity="0..1" />
+          <End Role="Employees_Tab" Type="Self.Employees_Tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role_Cat">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Employees_Tab">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PayRollIn__Emplo__3C69FB99">
+          <End Role="Employees_Tab" Type="Self.Employees_Tab" Multiplicity="0..1" />
+          <End Role="PayRollInfo_Tab" Type="Self.PayRollInfo_Tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees_Tab">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="PayRollInfo_Tab">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PayRoll_T__PayRo__3F466844">
+          <End Role="PayRollInfo_Tab" Type="Self.PayRollInfo_Tab" Multiplicity="0..1" />
+          <End Role="PayRoll_Tab" Type="Self.PayRoll_Tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayRollInfo_Tab">
+              <PropertyRef Name="PayRollInfoID" />
+            </Principal>
+            <Dependent Role="PayRoll_Tab">
+              <PropertyRef Name="PayRollInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TokenAuth__Token__60A75C0F">
+          <End Role="TokenStatus" Type="Self.TokenStatus" Multiplicity="0..1" />
+          <End Role="TokenAuth" Type="Self.TokenAuth" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TokenStatus">
+              <PropertyRef Name="TokenStatusID" />
+            </Principal>
+            <Dependent Role="TokenAuth">
+              <PropertyRef Name="TokenStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PayRollDB_" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees_Tab" EntityType="Self.Employees_Tab" />
+          <EntitySet Name="PayRoll_Tab" EntityType="Self.PayRoll_Tab" />
+          <EntitySet Name="PayRollInfo_Tab" EntityType="Self.PayRollInfo_Tab" />
+          <EntitySet Name="Role_Cat" EntityType="Self.Role_Cat" />
+          <EntitySet Name="TokenAuth" EntityType="Self.TokenAuth" />
+          <EntitySet Name="TokenStatus" EntityType="Self.TokenStatus" />
+          <AssociationSet Name="FK__Employees__RoleI__398D8EEE" Association="Self.FK__Employees__RoleI__398D8EEE">
+            <End Role="Role_Cat" EntitySet="Role_Cat" />
+            <End Role="Employees_Tab" EntitySet="Employees_Tab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PayRollIn__Emplo__3C69FB99" Association="Self.FK__PayRollIn__Emplo__3C69FB99">
+            <End Role="Employees_Tab" EntitySet="Employees_Tab" />
+            <End Role="PayRollInfo_Tab" EntitySet="PayRollInfo_Tab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PayRoll_T__PayRo__3F466844" Association="Self.FK__PayRoll_T__PayRo__3F466844">
+            <End Role="PayRollInfo_Tab" EntitySet="PayRollInfo_Tab" />
+            <End Role="PayRoll_Tab" EntitySet="PayRoll_Tab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TokenAuth__Token__60A75C0F" Association="Self.FK__TokenAuth__Token__60A75C0F">
+            <End Role="TokenStatus" EntitySet="TokenStatus" />
+            <End Role="TokenAuth" EntitySet="TokenAuth" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PayrollsDBMoStoreContainer" CdmEntityContainer="PayRollDB_">
+          <EntitySetMapping Name="Employees_Tab">
+            <EntityTypeMapping TypeName="PayrollsDBMo.Employees_Tab">
+              <MappingFragment StoreEntitySet="Employees_Tab">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastNames" ColumnName="LastNames" />
+                <ScalarProperty Name="AdmissionDate" ColumnName="AdmissionDate" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayRoll_Tab">
+            <EntityTypeMapping TypeName="PayrollsDBMo.PayRoll_Tab">
+              <MappingFragment StoreEntitySet="PayRoll_Tab">
+                <ScalarProperty Name="PayRollID" ColumnName="PayRollID" />
+                <ScalarProperty Name="InitialPeriod" ColumnName="InitialPeriod" />
+                <ScalarProperty Name="EndPeriod" ColumnName="EndPeriod" />
+                <ScalarProperty Name="PayRollDate" ColumnName="PayRollDate" />
+                <ScalarProperty Name="PayRollInfoID" ColumnName="PayRollInfoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayRollInfo_Tab">
+            <EntityTypeMapping TypeName="PayrollsDBMo.PayRollInfo_Tab">
+              <MappingFragment StoreEntitySet="PayRollInfo_Tab">
+                <ScalarProperty Name="PayRollInfoID" ColumnName="PayRollInfoID" />
+                <ScalarProperty Name="BaseSalary" ColumnName="BaseSalary" />
+                <ScalarProperty Name="BreakfastDeduction" ColumnName="BreakfastDeduction" />
+                <ScalarProperty Name="SavingDeduction" ColumnName="SavingDeduction" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role_Cat">
+            <EntityTypeMapping TypeName="PayrollsDBMo.Role_Cat">
+              <MappingFragment StoreEntitySet="Role_Cat">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TokenAuth">
+            <EntityTypeMapping TypeName="PayrollsDBMo.TokenAuth">
+              <MappingFragment StoreEntitySet="TokenAuth">
+                <ScalarProperty Name="TokenAuthID" ColumnName="TokenAuthID" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="TokenStatusID" ColumnName="TokenStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TokenStatus">
+            <EntityTypeMapping TypeName="PayrollsDBMo.TokenStatus">
+              <MappingFragment StoreEntitySet="TokenStatus">
+                <ScalarProperty Name="TokenStatusID" ColumnName="TokenStatusID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

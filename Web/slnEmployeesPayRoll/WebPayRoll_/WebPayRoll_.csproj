@@ -52,9 +52,13 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -162,16 +166,19 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\PayRollController.cs" />
-    <Compile Include="Controllers\PayRollInfoController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\FilterSession.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Api\LoginEntity.cs" />
+    <Compile Include="Models\Api\Responser.cs" />
+    <Compile Include="Models\Classes\MBase.cs" />
+    <Compile Include="Models\Classes\MUser.cs" />
     <Compile Include="Models\Classes\MEmployeeEnt.cs" />
     <Compile Include="Models\Classes\MPayRoll.cs" />
     <Compile Include="Models\Classes\MPayRollInfo.cs" />
@@ -205,8 +212,32 @@
       <DependentUpon>PayRollDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\MEmployees.cs" />
+    <Compile Include="Models\DB\TokenAuth.cs">
+      <DependentUpon>PayRollDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB\TokenStatus.cs">
+      <DependentUpon>PayRollDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Extensions\Generics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApi_PayRoll\Access.cs" />
+    <Compile Include="WebApi_PayRoll\AccessExtensions.cs" />
+    <Compile Include="WebApi_PayRoll\Auth.cs" />
+    <Compile Include="WebApi_PayRoll\AuthExtensions.cs" />
+    <Compile Include="WebApi_PayRoll\Employees.cs" />
+    <Compile Include="WebApi_PayRoll\EmployeesExtensions.cs" />
+    <Compile Include="WebApi_PayRoll\IAccess.cs" />
+    <Compile Include="WebApi_PayRoll\IAuth.cs" />
+    <Compile Include="WebApi_PayRoll\IEmployees.cs" />
+    <Compile Include="WebApi_PayRoll\IPayRollInfo.cs" />
+    <Compile Include="WebApi_PayRoll\IWebApiPayRoll.cs" />
+    <Compile Include="WebApi_PayRoll\Models\AMEmployee.cs" />
+    <Compile Include="WebApi_PayRoll\Models\AMLoginEntity.cs" />
+    <Compile Include="WebApi_PayRoll\Models\AMPayRollInfo.cs" />
+    <Compile Include="WebApi_PayRoll\Models\Responser.cs" />
+    <Compile Include="WebApi_PayRoll\PayRollInfo.cs" />
+    <Compile Include="WebApi_PayRoll\PayRollInfoExtensions.cs" />
+    <Compile Include="WebApi_PayRoll\WebApiPayRoll.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
